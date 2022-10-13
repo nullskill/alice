@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:alice/core/alice_core.dart';
+import 'package:alice/model/alice_form_data_file.dart';
+import 'package:alice/model/alice_from_data_field.dart';
 import 'package:alice/model/alice_http_call.dart';
 import 'package:alice/model/alice_http_request.dart';
 import 'package:alice/model/alice_http_response.dart';
@@ -38,7 +40,29 @@ class AliceHttpAdapter {
 
     final AliceHttpRequest httpRequest = AliceHttpRequest();
 
-    if (response.request is http.Request) {
+    if (response.request is http.MultipartRequest) {
+      // we are guaranteed` the existence of fields and headers
+      if (body != null) {
+        httpRequest.body = body;
+      }
+      final request = (response.request as http.MultipartRequest);
+      httpRequest.body = body ?? request.fields ?? "";
+      httpRequest.size = response.request?.contentLength ?? utf8.encode(httpRequest.body.toString()).length;
+
+      final fields = <AliceFormDataField>[];
+      for (var e in request.fields.entries) {
+        fields.add(AliceFormDataField(e.key, e.value));
+      }
+      httpRequest.formDataFields = fields;
+
+      final files = <AliceFormDataFile>[];
+      for (var f in request.files) {
+        files.add(AliceFormDataFile(f.filename, f.contentType.type, f.length));
+      }
+      httpRequest.formDataFiles = files;
+
+      httpRequest.headers = Map<String, dynamic>.from(response.request!.headers);
+    } else if (response.request is http.Request) {
       // we are guaranteed` the existence of body and headers
       if (body != null) {
         httpRequest.body = body;
@@ -46,8 +70,7 @@ class AliceHttpAdapter {
       // ignore: cast_nullable_to_non_nullable
       httpRequest.body = body ?? (response.request as http.Request).body ?? "";
       httpRequest.size = utf8.encode(httpRequest.body.toString()).length;
-      httpRequest.headers =
-          Map<String, dynamic>.from(response.request!.headers);
+      httpRequest.headers = Map<String, dynamic>.from(response.request!.headers);
     } else if (body == null) {
       httpRequest.size = 0;
       httpRequest.body = "";

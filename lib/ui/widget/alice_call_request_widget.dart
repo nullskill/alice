@@ -47,7 +47,13 @@ class _AliceCallRequestWidget extends AliceBaseCallDetailsWidgetState<AliceCallR
         (file) {
           rows.add(
             getListRow(
-              "   • ${file.fileName}:\n",
+              "   • ${file.fileName}:",
+              "",
+            ),
+          );
+          rows.add(
+            getListRow(
+              "",
               "${file.contentType} / ${formatBytes(file.length)}",
             ),
           );

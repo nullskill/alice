@@ -13,8 +13,7 @@ class AliceCallRequestWidget extends StatefulWidget {
   }
 }
 
-class _AliceCallRequestWidget
-    extends AliceBaseCallDetailsWidgetState<AliceCallRequestWidget> {
+class _AliceCallRequestWidget extends AliceBaseCallDetailsWidgetState<AliceCallRequestWidget> {
   AliceHttpCall get _call => widget.call;
 
   @override
@@ -45,11 +44,11 @@ class _AliceCallRequestWidget
     if (formDataFiles?.isNotEmpty == true) {
       rows.add(getListRow("Form data files: ", ""));
       formDataFiles!.forEach(
-        (field) {
+        (file) {
           rows.add(
             getListRow(
-              "   • ${field.fileName}:",
-              "${field.contentType} / ${field.length} B",
+              "   • ${file.fileName}:\n",
+              "${file.contentType} / ${formatBytes(file.length)}",
             ),
           );
         },

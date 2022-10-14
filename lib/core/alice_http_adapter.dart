@@ -47,7 +47,7 @@ class AliceHttpAdapter {
       }
       final request = (response.request as http.MultipartRequest);
       httpRequest.body = body ?? request.fields ?? "";
-      httpRequest.size = response.request?.contentLength ?? utf8.encode(httpRequest.body.toString()).length;
+      httpRequest.size = utf8.encode(httpRequest.body.toString()).length;
 
       final fields = <AliceFormDataField>[];
       for (var e in request.fields.entries) {

@@ -199,7 +199,7 @@ class AliceSaveHelper {
     stringBuffer.writeln('--------------------------------------------');
     stringBuffer.writeln('Curl');
     stringBuffer.writeln('--------------------------------------------');
-    stringBuffer.writeln('all.getCurlComman');
+    stringBuffer.write(call.getCurlCommand());
     stringBuffer.writeln();
     stringBuffer.writeln('==============================================');
     stringBuffer.writeln();
@@ -269,7 +269,7 @@ class AliceSaveHelper {
     stringBuffer.writeln('--------------------------------------------');
     stringBuffer.writeln('Curl');
     stringBuffer.writeln('--------------------------------------------');
-    stringBuffer.writeln('all.getCurlComman');
+    stringBuffer.write(call.getCurlCommand());
     stringBuffer.writeln();
     stringBuffer.writeln('==============================================');
     stringBuffer.writeln();

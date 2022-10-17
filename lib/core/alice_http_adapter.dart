@@ -9,6 +9,9 @@ import 'package:alice/model/alice_http_response.dart';
 import 'package:http/http.dart' as http;
 
 class AliceHttpAdapter {
+  static const String _contentTypeSmall = 'content-type';
+  static const String _contentTypeBig = 'Content-Type';
+
   /// AliceCore instance
   final AliceCore aliceCore;
 
@@ -24,17 +27,17 @@ class AliceHttpAdapter {
 
     final AliceHttpCall call = AliceHttpCall(response.request.hashCode);
     call.loading = true;
-    call.client = "HttpClient (http package)";
+    call.client = 'HttpClient (http package)';
     call.uri = request.url.toString();
     call.method = request.method;
     var path = request.url.path;
     if (path.isEmpty) {
-      path = "/";
+      path = '/';
     }
     call.endpoint = path;
 
     call.server = request.url.host;
-    if (request.url.scheme == "https") {
+    if (request.url.scheme == 'https') {
       call.secure = true;
     }
 
@@ -42,11 +45,8 @@ class AliceHttpAdapter {
 
     if (response.request is http.MultipartRequest) {
       // we are guaranteed` the existence of fields and headers
-      if (body != null) {
-        httpRequest.body = body;
-      }
       final request = (response.request as http.MultipartRequest);
-      httpRequest.body = body ?? request.fields ?? "";
+      httpRequest.body = body ?? '';
       httpRequest.size = request.contentLength;
 
       final fields = <AliceFormDataField>[];
@@ -68,7 +68,7 @@ class AliceHttpAdapter {
         httpRequest.body = body;
       }
       // ignore: cast_nullable_to_non_nullable
-      httpRequest.body = body ?? (response.request as http.Request).body ?? "";
+      httpRequest.body = body ?? (response.request as http.Request).body ?? '';
       httpRequest.size = utf8.encode(httpRequest.body.toString()).length;
       httpRequest.headers = Map<String, dynamic>.from(response.request!.headers);
     } else if (body == null) {
@@ -81,9 +81,11 @@ class AliceHttpAdapter {
 
     httpRequest.time = DateTime.now();
 
-    String? contentType = "unknown";
-    if (httpRequest.headers.containsKey("Content-Type")) {
-      contentType = httpRequest.headers["Content-Type"] as String?;
+    String? contentType = 'unknown';
+    if (httpRequest.headers.containsKey(_contentTypeSmall)) {
+      contentType = httpRequest.headers[_contentTypeSmall] as String?;
+    } else if (httpRequest.headers.containsKey(_contentTypeBig)) {
+      contentType = httpRequest.headers[_contentTypeBig] as String?;
     }
 
     httpRequest.contentType = contentType;

@@ -196,11 +196,11 @@ class AliceSaveHelper {
         stringBuffer.writeln('Error stacktrace: ${call.error!.stackTrace}');
       }
     }
-    stringBuffer.writeln('--------------------------------------------');
-    stringBuffer.writeln('Curl');
-    stringBuffer.writeln('--------------------------------------------');
-    stringBuffer.write(call.getCurlCommand());
-    stringBuffer.writeln();
+    // stringBuffer.writeln('--------------------------------------------');
+    // stringBuffer.writeln('Curl');
+    // stringBuffer.writeln('--------------------------------------------');
+    // stringBuffer.write(call.getCurlCommand());
+    // stringBuffer.writeln();
     stringBuffer.writeln('==============================================');
     stringBuffer.writeln();
 
@@ -266,11 +266,11 @@ class AliceSaveHelper {
         stringBuffer.writeln('Error stacktrace: ${call.error!.stackTrace}');
       }
     }
-    stringBuffer.writeln('--------------------------------------------');
-    stringBuffer.writeln('Curl');
-    stringBuffer.writeln('--------------------------------------------');
-    stringBuffer.write(call.getCurlCommand());
-    stringBuffer.writeln();
+    // stringBuffer.writeln('--------------------------------------------');
+    // stringBuffer.writeln('Curl');
+    // stringBuffer.writeln('--------------------------------------------');
+    // stringBuffer.write(call.getCurlCommand());
+    // stringBuffer.writeln();
     stringBuffer.writeln('==============================================');
     stringBuffer.writeln();
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class AliceParser {
   static const String _emptyBody = "Body is empty";
+  static const String _emptyFields = "Fields are empty";
   static const String _unknownContentType = "Unknown";
   static const String _jsonContentTypeSmall = "content-type";
   static const String _jsonContentTypeBig = "Content-Type";
@@ -34,8 +35,7 @@ class AliceParser {
 
       var bodyContent = _emptyBody;
 
-      if (contentType == null ||
-          !contentType.toLowerCase().contains(_applicationJson)) {
+      if (contentType == null || !contentType.toLowerCase().contains(_applicationJson)) {
         final bodyTemp = body.toString();
 
         if (bodyTemp.isNotEmpty) {
@@ -61,6 +61,24 @@ class AliceParser {
       return bodyContent;
     } catch (exception) {
       return _parseFailedText + body.toString();
+    }
+  }
+
+  static String formatFields(dynamic fields) {
+    try {
+      if (fields == null) return _emptyFields;
+
+      var bodyContent = _emptyFields;
+
+      final bodyTemp = fields.toString();
+
+      if (bodyTemp.isNotEmpty) {
+        bodyContent = bodyTemp;
+      }
+
+      return bodyContent;
+    } catch (exception) {
+      return _parseFailedText + fields.toString();
     }
   }
 
